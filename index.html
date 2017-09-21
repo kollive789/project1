@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3 Graphic</title>
+		<style type="text/css"></style>
+		<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+	</head>
+	<body>
+		<h2>D3 Graphic</h2>
+		<select id = "opts">
+    <option value="ds1">1</option>
+    <option value="ds2">2</option> 
+    <option value="ds3">3</option>
+
+      </select> 
+    <script>
+    var data = [10,20,30,40,50,60,70,80,90,100];
+
+    var color = d3.schemeCategory10; // color array built in
+
+   var select = d3.select("#opts").on("change", function() {
+  console.log(this.value)
+});
+
+    //// Add the circles (and svg)
+    var svg = d3.selectAll('body')
+      .append('svg')
+      .attr('width',500)
+      .attr('height',200);
+
+    var circles = svg.selectAll('circle')
+      .data(data)
+      .enter()
+	  .append("select")
+      .append('circle')
+      .attr('cx',function(d,i) { return i * 30 + 50; })
+      .attr('cy',50)
+      .attr('r',10)
+      .attr('fill',function(d,i) { return color[i]; });
+
+
+    // Update everything:
+    function update(i) {
+      data.splice(i,1); // remove that element.
+
+      // Update and remove option from the select menu:
+      options.data(data).exit().remove();
+
+      // Remove that circle:
+      circles.data(data).exit().remove(); 
+
+      circles.attr('cx',function(d,i) { return i * 30 + 50; })
+        .attr('fill',function(d,i) { return color[i]; });
+
+      // reset the select menu:
+      start.property('selected','selected');
+    }
+		</script>
+	</body>
+</html>
